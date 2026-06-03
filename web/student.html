@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Dashboard</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body { font-family: Arial, sans-serif; font-size: 14px; background: #f0f2f5; }
+
+        .hms-wrapper { display: flex; min-height: 100vh; }
+
+        /* ── Sidebar ── */
+        .sidebar {
+            width: 220px;
+            background: #1e2a3a;
+            color: #fff;
+            flex-shrink: 0;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sidebar-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 16px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .avatar {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: #4a6080;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .sidebar-welcome {
+            padding: 12px 16px;
+            font-size: 12px;
+            color: #aab4c0;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+        }
+
+        .sidebar-nav a {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 11px 16px;
+            color: #cdd6e0;
+            text-decoration: none;
+            font-size: 13px;
+        }
+
+        .sidebar-nav a:hover { background: rgba(255,255,255,0.07); color: #fff; }
+
+        /* ── Topbar ── */
+        .topbar {
+            background: #fff;
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .topbar-title { font-size: 15px; font-weight: 600; }
+
+        .topbar-user { font-size: 13px; color: #555; }
+
+        /* ── Main ── */
+        .main { flex: 1; display: flex; flex-direction: column; }
+
+        .content { padding: 20px; flex: 1; }
+
+        .page-title {
+            font-size: 20px;
+            font-weight: 500;
+            margin-bottom: 16px;
+            color: #222;
+        }
+
+        /* ── Section cards ── */
+        .section {
+            background: #fff;
+            border-radius: 8px;
+            border: 1px solid #e0e0e0;
+            margin-bottom: 16px;
+            overflow: hidden;
+        }
+
+        .section-header {
+            padding: 12px 16px;
+            font-size: 14px;
+            font-weight: 600;
+            color: #1e2a3a;
+            border-bottom: 1px solid #f0f0f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #f8f9fb;
+        }
+
+        .section-body { padding: 16px; }
+
+        /* ── Profile injected by JS ── */
+        #profile h3 {
+            font-size: 15px;
+            font-weight: 600;
+            color: #1e2a3a;
+            margin-bottom: 12px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #2d5fa6;
+            display: inline-block;
+        }
+
+        #profile {
+            line-height: 2;
+            color: #444;
+            font-size: 14px;
+        }
+
+        /* ── Notice cards injected by JS ── */
+        /* JS injects: <div style='border:1px solid gray;padding:10px;margin:10px;'> */
+        #noticeList div {
+            border: none !important;
+            margin: 0 0 12px 0 !important;
+            padding: 14px 16px !important;
+            background: #f0f5ff;
+            border-radius: 6px;
+            border-left: 4px solid #2d5fa6 !important;
+        }
+
+        #noticeList div h3 {
+            font-size: 14px;
+            font-weight: 600;
+            color: #1e2a3a;
+            margin-bottom: 6px;
+        }
+
+        #noticeList div p {
+            font-size: 13px;
+            color: #444;
+            margin-bottom: 6px;
+            line-height: 1.6;
+        }
+
+        #noticeList div small {
+            font-size: 11px;
+            color: #888;
+        }
+
+        /* ── Rent cards injected by JS ── */
+        /* JS injects: <div style='border:1px solid gray;padding:10px;margin:10px;'> */
+        #rentList div {
+            border: none !important;
+            margin: 0 0 10px 0 !important;
+            padding: 14px 16px !important;
+            background: #f8f9fb;
+            border-radius: 6px;
+            border-left: 4px solid #27ae60 !important;
+            font-size: 13px;
+            line-height: 2;
+            color: #333;
+        }
+
+        /* ── Tables injected by JS (employees & facilities) ── */
+        #employees table,
+        #facilities table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+            border: none !important;
+        }
+
+        #employees table th,
+        #facilities table th {
+            background: #1e2a3a;
+            color: #fff;
+            padding: 10px 14px;
+            text-align: left;
+            font-weight: 500;
+            font-size: 12px;
+            letter-spacing: 0.04em;
+            border: none !important;
+        }
+
+        #employees table td,
+        #facilities table td {
+            padding: 10px 14px;
+            color: #333;
+            border: none !important;
+            border-bottom: 1px solid #f0f0f0 !important;
+        }
+
+        #employees table tr:nth-child(even) td,
+        #facilities table tr:nth-child(even) td {
+            background: #f8f9fb;
+        }
+
+        #employees table tr:hover td,
+        #facilities table tr:hover td {
+            background: #eef3fb;
+        }
+
+        /* ── Footer ── */
+        .footer {
+            padding: 10px 20px;
+            font-size: 11px;
+            color: #888;
+            display: flex;
+            justify-content: space-between;
+            border-top: 1px solid #e0e0e0;
+            background: #fff;
+        }
+    </style>
+</head>
+<body>
+
+<div class="hms-wrapper">
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="sidebar-logo">
+            <div class="avatar">S</div>
+            <span>HMS</span>
+        </div>
+        <div class="sidebar-welcome" id="welcome"></div>
+        <nav class="sidebar-nav">
+            <a href="#">⊞ Dashboard</a>
+            <a href="#profile-section">👤 My Profile</a>
+            <a href="#notice-section">🔔 Hostel Notices</a>
+            <a href="#rent-section">💳 My Rent Details</a>
+            <a href="#emp-section">👔 Hostel Employees</a>
+            <a href="#facility-section">🏗 Hostel Facilities</a>
+            <a href="login.html">🚪 Logout</a>
+        </nav>
+    </aside>
+
+    <!-- Main -->
+    <div class="main">
+
+        <header class="topbar">
+            <div style="font-size:20px;cursor:pointer;color:#555;">☰</div>
+            <div class="topbar-title">Girls Hostel Management System</div>
+            <div class="topbar-user" id="topbarName"></div>
+        </header>
+
+        <div class="content">
+
+            <h1 class="page-title">Student Dashboard</h1>
+
+            <!-- Profile -->
+            <div class="section" id="profile-section">
+                <div class="section-header">
+                    <span>My Profile</span><span>−</span>
+                </div>
+                <div class="section-body" id="profile"></div>
+            </div>
+
+            <!-- Notices -->
+            <div class="section" id="notice-section">
+                <div class="section-header">
+                    <span>Hostel Notices</span><span>−</span>
+                </div>
+                <div class="section-body" id="noticeList"></div>
+            </div>
+
+            <!-- Rent -->
+            <div class="section" id="rent-section">
+                <div class="section-header">
+                    <span>My Rent Details</span><span>−</span>
+                </div>
+                <div class="section-body" id="rentList"></div>
+            </div>
+
+            <!-- Employees -->
+            <div class="section" id="emp-section">
+                <div class="section-header">
+                    <span>Hostel Employees</span><span>−</span>
+                </div>
+                <div class="section-body" id="employees"></div>
+            </div>
+
+            <!-- Facilities -->
+            <div class="section" id="facility-section">
+                <div class="section-header">
+                    <span>Hostel Facilities</span><span>−</span>
+                </div>
+                <div class="section-body" id="facilities"></div>
+            </div>
+
+        </div>
+
+        <footer class="footer">
+            <span><strong>Copyright © 2025.</strong> All rights reserved.</span>
+            <span>Version 3.1.0</span>
+        </footer>
+
+    </div>
+</div>
+
+<script src="js/student.js"></script>
+
+</body>
+</html>

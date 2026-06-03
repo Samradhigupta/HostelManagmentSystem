@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Girls Hostel Management System</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            font-family: Arial, sans-serif;
+            background: url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1600') center/cover no-repeat;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* If you have your own bg image, replace the url above with: */
+        /* background: url('images/bg.jpg') center/cover no-repeat; */
+
+        h2 {
+            color: #fff;
+            font-size: 32px;
+            font-weight: bold;
+            text-align: center;
+            text-shadow: 1px 2px 6px rgba(0,0,0,0.5);
+            margin-bottom: 28px;
+        }
+
+        .login-box {
+            background: #fff;
+            padding: 36px 40px 32px;
+            width: 420px;
+            border-radius: 4px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .login-box label {
+            font-size: 12px;
+            font-weight: bold;
+            letter-spacing: 0.08em;
+            color: #555;
+            margin-bottom: 6px;
+            margin-top: 18px;
+        }
+
+        .login-box label:first-of-type {
+            margin-top: 0;
+        }
+
+        .login-box select,
+        .login-box input {
+            width: 100%;
+            border: 1.5px solid #d0cfc8;
+            border-radius: 3px;
+            padding: 11px 14px;
+            font-size: 15px;
+            color: #333;
+            outline: none;
+            background: #fff;
+        }
+
+        .login-box input::placeholder {
+            color: #bbb;
+        }
+
+        .login-box button {
+            margin-top: 22px;
+            background: #2d5fa6;
+            color: #fff;
+            border: none;
+            border-radius: 3px;
+            padding: 13px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            letter-spacing: 0.04em;
+        }
+
+        .login-box button:hover {
+            background: #254f8c;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Girls Hostel Management System</h2>
+
+    <div class="login-box">
+
+        <label>ROLE</label>
+        <select id="role">
+            <option>Admin</option>
+            <option>Student</option>
+        </select>
+
+        <label>YOUR USERNAME OR EMAIL</label>
+        <input type="text"
+               id="username"
+               placeholder="Username">
+
+        <label>PASSWORD</label>
+        <input type="password"
+               id="password"
+               placeholder="Password">
+
+        <button onclick="login()">login</button>
+
+    </div>
+
+    <script src="js/login.js"></script>
+
+</body>
+</html>
